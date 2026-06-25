@@ -10,6 +10,11 @@ export class MovieRepository {
     this.httpRequest = http.createHttp();
   }
 
+  // 优先使用代理地址，留空则直连 TMDB 原地址
+  private getBaseUrl(): string {
+    return Constants.TMDB_BASE_URL_PROXY || Constants.TMDB_BASE_URL;
+  }
+
   // 🌟 2. 修正：将显式 any 规避为通用对象结构，并严格加上 Promise 返回值声明
   private async fetchJson(url: string): Promise<Record<string, Object>> {
     return new Promise<Record<string, Object>>((resolve: (value: Record<string, Object>) => void, reject: (reason: Error) => void): void => {
@@ -45,7 +50,7 @@ export class MovieRepository {
   }
 
   async fetchPopular(page: number = 1): Promise<Movie[]> {
-    const url = `${Constants.TMDB_BASE_URL}/movie/popular?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&page=${page}`;
+    const url = `${this.getBaseUrl()}/movie/popular?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&page=${page}`;
     const data = await this.fetchJson(url);
     const results = (data['results'] || []) as Record<string, Object>[];
     // 🌟 4. 修正：极其严苛的匿名箭头函数必须要声明类型 (item): Movie => { ... }
@@ -53,14 +58,14 @@ export class MovieRepository {
   }
 
   async fetchTopRated(page: number = 1): Promise<Movie[]> {
-    const url = `${Constants.TMDB_BASE_URL}/movie/top_rated?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&page=${page}`;
+    const url = `${this.getBaseUrl()}/movie/top_rated?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&page=${page}`;
     const data = await this.fetchJson(url);
     const results = (data['results'] || []) as Record<string, Object>[];
     return results.map((item: Record<string, Object>): Movie => this.parseMovie(item));
   }
 
   async fetchNowPlaying(page: number = 1): Promise<Movie[]> {
-    const url = `${Constants.TMDB_BASE_URL}/movie/now_playing?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&page=${page}`;
+    const url = `${this.getBaseUrl()}/movie/now_playing?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&page=${page}`;
     const data = await this.fetchJson(url);
     const results = (data['results'] || []) as Record<string, Object>[];
     return results.map((item: Record<string, Object>): Movie => this.parseMovie(item));
@@ -68,14 +73,14 @@ export class MovieRepository {
 
   async fetchByGenre(genreIds: number[], page: number = 1): Promise<Movie[]> {
     const ids = genreIds.join(',');
-    const url = `${Constants.TMDB_BASE_URL}/discover/movie?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&with_genres=${ids}&sort_by=vote_average.desc&vote_count.gte=100&page=${page}`;
+    const url = `${this.getBaseUrl()}/discover/movie?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&with_genres=${ids}&sort_by=vote_average.desc&vote_count.gte=100&page=${page}`;
     const data = await this.fetchJson(url);
     const results = (data['results'] || []) as Record<string, Object>[];
     return results.map((item: Record<string, Object>): Movie => this.parseMovie(item));
   }
 
   async fetchMovieDetail(movieId: number): Promise<MovieDetail> {
-    const url = `${Constants.TMDB_BASE_URL}/movie/${movieId}?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&append_to_response=credits,recommendations`;
+    const url = `${this.getBaseUrl()}/movie/${movieId}?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&append_to_response=credits,recommendations`;
     const data = await this.fetchJson(url);
     const movie = this.parseMovie(data) as MovieDetail;
 
@@ -105,7 +110,7 @@ export class MovieRepository {
   }
 
   async searchMovies(query: string, page: number = 1): Promise<Movie[]> {
-    const url = `${Constants.TMDB_BASE_URL}/search/movie?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&query=${encodeURIComponent(query)}&page=${page}`;
+    const url = `${this.getBaseUrl()}/search/movie?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}&query=${encodeURIComponent(query)}&page=${page}`;
     const data = await this.fetchJson(url);
     const results = (data['results'] || []) as Record<string, Object>[];
     return results.map((item: Record<string, Object>): Movie => this.parseMovie(item));
@@ -113,7 +118,7 @@ export class MovieRepository {
 
   async fetchByFilters(genres: number[], minRating: number, page: number = 1): Promise<Movie[]> {
     const genreParam = genres.length > 0 ? `&with_genres=${genres.join(',')}` : '';
-    const url = `${Constants.TMDB_BASE_URL}/discover/movie?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}${genreParam}&vote_average.gte=${minRating}&vote_count.gte=50&sort_by=popularity.desc&page=${page}`;
+    const url = `${this.getBaseUrl()}/discover/movie?api_key=${Constants.TMDB_API_KEY}&language=${Constants.LANG_ZH}${genreParam}&vote_average.gte=${minRating}&vote_count.gte=50&sort_by=popularity.desc&page=${page}`;
     const data = await this.fetchJson(url);
     const results = (data['results'] || []) as Record<string, Object>[];
     return results.map((item: Record<string, Object>): Movie => this.parseMovie(item));
