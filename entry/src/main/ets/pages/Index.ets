@@ -2,6 +2,7 @@ import { HomeContent } from '../view/HomeContent';
 import { DiscoverContent } from '../view/DiscoverContent';
 import { MineContent } from '../view/MineContent';
 
+
 interface TabBuilderParam {
   icon: string;
   text: string;
