@@ -4,6 +4,19 @@ import { Constants } from '../common/Constants';
 import { MovieViewModel } from '../viewmodel/MovieViewModel';
 import router from '@ohos.router';
 
+interface RatingOption {
+  label: string;
+  value: number;
+}
+
+// 🌟 2. 移到 struct 外部声明常量（结合之前的 static 报错修正）
+// 必须显式声明数组类型为 RatingOption[]
+const RATING_OPTIONS: RatingOption[] = [
+  { label: '不限', value: 0 },
+  { label: '6分+', value: 6 },
+  { label: '7分+', value: 7 },
+  { label: '8分+', value: 8 }
+];
 @Component
 export struct DiscoverContent {
   @State selectedGenres: number[] = [];
@@ -14,12 +27,6 @@ export struct DiscoverContent {
   private repo: MovieRepository = new MovieRepository();
   private vm: MovieViewModel = MovieViewModel.getInstance();
 
-  static readonly RATING_OPTIONS = [
-    { label: '不限', value: 0 },
-    { label: '6分+', value: 6 },
-    { label: '7分+', value: 7 },
-    { label: '8分+', value: 8 },
-  ];
 
   toggleGenre(genreId: number) {
     const idx = this.selectedGenres.indexOf(genreId);
@@ -76,7 +83,7 @@ export struct DiscoverContent {
             .margin({ left: 16 })
 
           Row() {
-            ForEach(DiscoverContent.RATING_OPTIONS, (opt: { label: string, value: number }) => {
+            ForEach(RATING_OPTIONS, (opt: RatingOption) => { // 🌟 1. 修复：这里的类型必须改成具体的 RatingOption 接口
               Text(opt.label)
                 .fontSize(14)
                 .padding({ left: 16, right: 16, top: 8, bottom: 8 })
@@ -85,7 +92,7 @@ export struct DiscoverContent {
                 .fontColor(this.minRating === opt.value ? '#fff' : '#333')
                 .margin({ right: 8 })
                 .onClick(() => this.minRating = opt.value)
-            })
+            }, (opt: RatingOption) => opt.label) // 🌟 2. 规范：显式加上键值生成器（Key Generator），保证渲染性能与状态刷新
           }
           .margin({ left: 16, bottom: 16 })
 

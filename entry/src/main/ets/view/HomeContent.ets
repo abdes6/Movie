@@ -145,7 +145,7 @@ export struct HomeContent {
             .fontWeight(FontWeight.Bold)
             .margin({ left: 16, top: 16, bottom: 8 })
 
-          Scroll({ scroller: new Scroller() }) {
+          Scroll(new Scroller()) {
             Row() {
               ForEach(this.popularMovies, (movie: Movie) => {
                 Column() {
@@ -174,7 +174,7 @@ export struct HomeContent {
             .fontWeight(FontWeight.Bold)
             .margin({ left: 16, top: 16, bottom: 8 })
 
-          Scroll({ scroller: new Scroller() }) {
+          Scroll(new Scroller()) {
             Row() {
               ForEach(this.topRatedMovies, (movie: Movie) => {
                 Column() {
@@ -203,7 +203,7 @@ export struct HomeContent {
             .fontWeight(FontWeight.Bold)
             .margin({ left: 16, top: 16, bottom: 8 })
 
-          Scroll({ scroller: new Scroller() }) {
+          Scroll(new Scroller()) {
             Row() {
               ForEach(this.newMovies, (movie: Movie) => {
                 Column() {
