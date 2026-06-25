@@ -1,8 +1,6 @@
 export class Constants {
-  static readonly TMDB_BASE_URL = 'https://api.themoviedb.org/3';
-  // 国内用户可填写 TMDB 代理地址，留空则直连原地址
-  static readonly TMDB_BASE_URL_PROXY: string = '';
-  static readonly TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
+  static readonly TMDB_BASE_URL: string = 'https://tmdb.api.lncld.net/3';
+  static readonly TMDB_IMAGE_BASE: string = 'https://supalite.onrender.com/t/p/w500/';
   static readonly TMDB_API_KEY = 'edb8215195923ea4410a96771ef5899d';
   static readonly LANG_ZH = 'zh-CN';
 
