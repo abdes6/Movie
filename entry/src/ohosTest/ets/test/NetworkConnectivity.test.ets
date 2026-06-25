@@ -36,7 +36,7 @@ export default function networkConnectivityTest() {
       const repo = new MovieRepository();
       const movies: Movie[] = await repo.fetchPopular();
       expect(movies.length).assertLarger(0);
-      expect(movies[0].title).assertNotEmpty();
+      expect(movies[0].title.length).assertLarger(0);
       expect(movies[0].posterPath).assertContain('https://');
       repo.destroy();
     });
@@ -55,9 +55,9 @@ export default function networkConnectivityTest() {
       const repo = new MovieRepository();
       const knownMovieId = 550;
       const detail: MovieDetail = await repo.fetchMovieDetail(knownMovieId);
-      expect(detail.title).assertNotEmpty();
+      expect(detail.title.length).assertLarger(0);
       expect(detail.runtime).assertLarger(0);
-      expect(detail.director).assertNotEmpty();
+      expect(detail.director.length).assertLarger(0);
       expect(detail.cast.length).assertLarger(0);
       repo.destroy();
     });
