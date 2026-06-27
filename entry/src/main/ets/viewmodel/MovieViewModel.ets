@@ -20,7 +20,7 @@ export class MovieViewModel {
   }
 
   toggleWantToWatch(movieId: number): void {
-    const idx = this.collectionState.wantToWatch.indexOf(movieId);
+    const idx: number = this.collectionState.wantToWatch.indexOf(movieId);
     if (idx >= 0) {
       this.collectionState.wantToWatch.splice(idx, 1);
     } else {
@@ -29,7 +29,7 @@ export class MovieViewModel {
   }
 
   toggleWatched(movieId: number): void {
-    const idx = this.collectionState.watched.indexOf(movieId);
+    const idx: number = this.collectionState.watched.indexOf(movieId);
     if (idx >= 0) {
       this.collectionState.watched.splice(idx, 1);
     } else {
@@ -38,7 +38,7 @@ export class MovieViewModel {
   }
 
   toggleLiked(movieId: number): void {
-    const idx = this.collectionState.liked.indexOf(movieId);
+    const idx: number = this.collectionState.liked.indexOf(movieId);
     if (idx >= 0) {
       this.collectionState.liked.splice(idx, 1);
     } else {

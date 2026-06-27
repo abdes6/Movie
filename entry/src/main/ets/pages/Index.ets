@@ -2,7 +2,6 @@ import { HomeContent } from '../view/HomeContent';
 import { DiscoverContent } from '../view/DiscoverContent';
 import { MineContent } from '../view/MineContent';
 
-
 interface TabBuilderParam {
   icon: string;
   text: string;
@@ -33,7 +32,9 @@ struct Index {
     }
     .vertical(false)
     .barMode(BarMode.Fixed)
-    .onChange(idx => this.currentIndex = idx)
+    .onChange((idx: number): void => {
+      this.currentIndex = idx;
+    })
     .width('100%')
     .height('100%')
   }

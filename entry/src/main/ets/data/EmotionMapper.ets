@@ -46,6 +46,6 @@ export class EmotionMapper {
   ];
 
   static getEmotionByLabel(label: string): EmotionItem | undefined {
-    return EmotionMapper.EMOTIONS.find(e => e.label === label);
+    return EmotionMapper.EMOTIONS.find((e: EmotionItem): boolean => e.label === label);
   }
 }

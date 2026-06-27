@@ -32,7 +32,7 @@ export struct MineContent {
     return '喜欢';
   }
 
-  goToDetail(movieId: number) {
+  goToDetail(movieId: number): void {
     router.pushUrl({ url: 'pages/MovieDetail', params: { movieId: movieId } });
   }
 
@@ -46,7 +46,7 @@ export struct MineContent {
         Text(this.viewMode === 'grid' ? '列表' : '网格')
           .fontSize(14)
           .fontColor('#1890ff')
-          .onClick(() => {
+          .onClick((): void => {
             this.viewMode = this.viewMode === 'grid' ? 'list' : 'grid';
           })
       }
@@ -67,7 +67,9 @@ export struct MineContent {
         }
         .tabBar('喜欢')
       }
-      .onChange(idx => this.currentTab = idx)
+      .onChange((idx: number): void => {
+        this.currentTab = idx;
+      })
       .width('100%')
       .height('100%')
     }
@@ -87,7 +89,7 @@ export struct MineContent {
     } else {
       if (this.viewMode === 'grid') {
         Grid() {
-          ForEach(param.movies, (movie: Movie) => {
+          ForEach(param.movies, (movie: Movie): void => {
             GridItem() {
               Column() {
                 Image(movie.posterPath)
@@ -98,9 +100,11 @@ export struct MineContent {
                   .fontSize(12)
                   .margin({ top: 4 })
               }
-              .onClick(() => this.goToDetail(movie.id))
+              .onClick((): void => {
+                this.goToDetail(movie.id);
+              })
             }
-          })
+          }, (movie: Movie): string => movie.id.toString())
         }
         .columnsTemplate('1fr 1fr')
         .columnsGap(12)
@@ -109,7 +113,7 @@ export struct MineContent {
         .padding(16)
       } else {
         List() {
-          ForEach(param.movies, (movie: Movie) => {
+          ForEach(param.movies, (movie: Movie): void => {
             ListItem() {
               Row() {
                 Image(movie.posterPath)
@@ -130,9 +134,11 @@ export struct MineContent {
               }
               .width('100%')
               .padding(8)
-              .onClick(() => this.goToDetail(movie.id))
+              .onClick((): void => {
+                this.goToDetail(movie.id);
+              })
             }
-          })
+          }, (movie: Movie): string => movie.id.toString())
         }
         .width('100%')
       }

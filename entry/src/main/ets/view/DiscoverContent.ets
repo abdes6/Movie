@@ -9,14 +9,13 @@ interface RatingOption {
   value: number;
 }
 
-// 🌟 2. 移到 struct 外部声明常量（结合之前的 static 报错修正）
-// 必须显式声明数组类型为 RatingOption[]
 const RATING_OPTIONS: RatingOption[] = [
   { label: '不限', value: 0 },
   { label: '6分+', value: 6 },
   { label: '7分+', value: 7 },
   { label: '8分+', value: 8 }
 ];
+
 @Component
 export struct DiscoverContent {
   @State selectedGenres: number[] = [];
@@ -27,9 +26,8 @@ export struct DiscoverContent {
   private repo: MovieRepository = new MovieRepository();
   private vm: MovieViewModel = MovieViewModel.getInstance();
 
-
-  toggleGenre(genreId: number) {
-    const idx = this.selectedGenres.indexOf(genreId);
+  toggleGenre(genreId: number): void {
+    const idx: number = this.selectedGenres.indexOf(genreId);
     if (idx >= 0) {
       this.selectedGenres.splice(idx, 1);
     } else {
@@ -37,19 +35,19 @@ export struct DiscoverContent {
     }
   }
 
-  async search() {
+  async search(): Promise<void> {
     this.hasSearched = true;
     this.resultMovies = await this.repo.fetchByFilters(this.selectedGenres, this.minRating);
   }
 
-  clearFilters() {
+  clearFilters(): void {
     this.selectedGenres = [];
     this.minRating = 0;
     this.resultMovies = [];
     this.hasSearched = false;
   }
 
-  goToDetail(movieId: number) {
+  goToDetail(movieId: number): void {
     router.pushUrl({ url: 'pages/MovieDetail', params: { movieId: movieId } });
   }
 
@@ -63,7 +61,7 @@ export struct DiscoverContent {
             .margin({ top: 16, left: 16 })
 
           Flex({ wrap: FlexWrap.Wrap, justifyContent: FlexAlign.Start }) {
-            ForEach(Constants.GENRE_KEYS, (key: string) => {
+            ForEach(Constants.GENRE_KEYS, (key: string): void => {
               Text(key)
                 .fontSize(14)
                 .padding({ left: 16, right: 16, top: 8, bottom: 8 })
@@ -71,8 +69,10 @@ export struct DiscoverContent {
                 .backgroundColor(this.selectedGenres.indexOf(Constants.GENRES[key]) >= 0 ? '#1890ff' : '#f0f0f0')
                 .fontColor(this.selectedGenres.indexOf(Constants.GENRES[key]) >= 0 ? '#fff' : '#333')
                 .margin({ right: 8, bottom: 8 })
-                .onClick(() => this.toggleGenre(Constants.GENRES[key]))
-            })
+                .onClick((): void => {
+                  this.toggleGenre(Constants.GENRES[key]);
+                })
+            }, (key: string): string => key)
           }
           .width('100%')
           .padding(16)
@@ -83,7 +83,7 @@ export struct DiscoverContent {
             .margin({ left: 16 })
 
           Row() {
-            ForEach(RATING_OPTIONS, (opt: RatingOption) => { // 🌟 1. 修复：这里的类型必须改成具体的 RatingOption 接口
+            ForEach(RATING_OPTIONS, (opt: RatingOption): void => {
               Text(opt.label)
                 .fontSize(14)
                 .padding({ left: 16, right: 16, top: 8, bottom: 8 })
@@ -91,19 +91,25 @@ export struct DiscoverContent {
                 .backgroundColor(this.minRating === opt.value ? '#1890ff' : '#f0f0f0')
                 .fontColor(this.minRating === opt.value ? '#fff' : '#333')
                 .margin({ right: 8 })
-                .onClick(() => this.minRating = opt.value)
-            }, (opt: RatingOption) => opt.label) // 🌟 2. 规范：显式加上键值生成器（Key Generator），保证渲染性能与状态刷新
+                .onClick((): void => {
+                  this.minRating = opt.value;
+                })
+            }, (opt: RatingOption): string => opt.label)
           }
           .margin({ left: 16, bottom: 16 })
 
           Row() {
             Button('搜索')
               .width(120)
-              .onClick(() => this.search())
+              .onClick((): void => {
+                this.search();
+              })
             Button('清空')
               .width(120)
               .type(ButtonType.Normal)
-              .onClick(() => this.clearFilters())
+              .onClick((): void => {
+                this.clearFilters();
+              })
           }
           .width('100%')
           .justifyContent(FlexAlign.Center)
@@ -117,7 +123,7 @@ export struct DiscoverContent {
           }
 
           Grid() {
-            ForEach(this.resultMovies, (movie: Movie) => {
+            ForEach(this.resultMovies, (movie: Movie): void => {
               GridItem() {
                 Column() {
                   Image(movie.posterPath)
@@ -140,9 +146,11 @@ export struct DiscoverContent {
                       .margin({ left: 4 })
                   }
                 }
-                .onClick(() => this.goToDetail(movie.id))
+                .onClick((): void => {
+                  this.goToDetail(movie.id);
+                })
               }
-            })
+            }, (movie: Movie): string => movie.id.toString())
           }
           .columnsTemplate('1fr 1fr')
           .rowsTemplate('auto')

@@ -1,6 +1,6 @@
 export class Constants {
-  static readonly TMDB_BASE_URL: string = 'https://tmdb.api.lncld.net/3';
-  static readonly TMDB_IMAGE_BASE: string = 'https://supalite.onrender.com/t/p/w500/';
+  static readonly API_BASE_URL: string = 'http://127.0.0.1:5000/api';
+  static readonly IMAGE_BASE_URL: string = 'http://10.0.2.2:5000/api/image';
   static readonly TMDB_API_KEY = 'edb8215195923ea4410a96771ef5899d';
   static readonly LANG_ZH = 'zh-CN';
 
