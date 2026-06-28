@@ -1,7 +1,15 @@
-// 数据仓库层：封装所有后端 API 调用，将响应数据解析为前端 Model
 import { http } from '@kit.NetworkKit';
 import { Constants } from '../common/Constants';
 import { Movie, MovieDetail, CastMember } from '../model/Models';
+
+const SIZE_RE: RegExp = /^\/(w\d+|h\d+|original)\//;
+
+function buildImageUrl(path: string | undefined, defaultSize: string = '/w500'): string {
+  if (!path) return Constants.FALLBACK_POSTER;
+  if (path.startsWith('http')) return path;
+  const sized = SIZE_RE.test(path) ? path : `${defaultSize}${path}`;
+  return `${Constants.TMDB_CDN_BASE}${sized}`;
+}
 
 export class MovieRepository {
   private httpRequest: http.HttpRequest;
@@ -10,7 +18,6 @@ export class MovieRepository {
     this.httpRequest = http.createHttp();
   }
 
-  // 通用 GET 请求，返回解析后的 JSON 对象
   private async fetchJson(url: string): Promise<Record<string, Object>> {
     return new Promise<Record<string, Object>>((resolve: (value: Record<string, Object>) => void, reject: (reason: Error) => void): void => {
       this.httpRequest.request(url, {
@@ -28,24 +35,9 @@ export class MovieRepository {
     });
   }
 
-  // 将后端返回的原始电影数据解析为 Movie 对象
   private parseMovie(data: Record<string, Object>): Movie {
-    // 图片 URL 拼接逻辑（三档优先级）：
-    // 1. poster_path 以 http 开头 → 直接作为绝对路径使用（如豆瓣图床）
-    // 2. poster_path 有值 → 拼接 TMDB CDN 前缀
-    // 3. poster_path 为 null/空 → 使用兜底占位图
-    const rawPoster = data['poster_path'] as string | undefined;
-    const rawBackdrop = data['backdrop_path'] as string | undefined;
-    const posterPath: string = rawPoster
-      ? rawPoster.startsWith('http')
-        ? rawPoster
-        : `${Constants.TMDB_CDN_BASE}${rawPoster}`
-      : Constants.FALLBACK_POSTER;
-    const backdropPath: string = rawBackdrop
-      ? rawBackdrop.startsWith('http')
-        ? rawBackdrop
-        : `${Constants.TMDB_CDN_BASE}${rawBackdrop}`
-      : Constants.FALLBACK_POSTER;
+    const posterPath: string = buildImageUrl(data['poster_path'] as string | undefined);
+    const backdropPath: string = buildImageUrl(data['backdrop_path'] as string | undefined);
     return {
       id: data['id'] as number,
       title: (data['title'] || data['original_title'] || '') as string,
@@ -101,18 +93,12 @@ export class MovieRepository {
 
     movie.runtime = (data['runtime'] || 0) as number;
 
-    // 解析演员列表（取前 10 人）
     const cast = (data['cast'] || []) as Record<string, Object>[];
     movie.cast = cast.slice(0, 10).map((c: Record<string, Object>): CastMember => {
-      const rawProfile = c['profile_path'] as string | undefined;
       return {
         name: (c['name'] || '') as string,
         character: (c['character'] || '') as string,
-        profilePath: rawProfile
-          ? rawProfile.startsWith('http')
-            ? rawProfile
-            : `${Constants.TMDB_CDN_BASE}${rawProfile}`
-          : Constants.FALLBACK_POSTER
+        profilePath: buildImageUrl(c['profile_path'] as string | undefined, '/w185')
       };
     });
 

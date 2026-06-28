@@ -1,4 +1,5 @@
 import logging
+import re
 
 import requests
 from flask import Response
@@ -7,19 +8,23 @@ from config import Config
 
 logger = logging.getLogger(__name__)
 
+# TMDB 合法图片尺寸段：w45/w92/w154/w185/w300/w342/w500/w780/w1280/h632/original
+SIZE_RE = re.compile(r'^/(w\d+|h\d+|original)/')
+
+
+def _ensure_size(path: str) -> str:
+    if SIZE_RE.match(path):
+        return path
+    return f'/{Config.TMDB_DEFAULT_SIZE}{path}'
+
 
 def proxy_image(image_path: str) -> Response:
-    """
-    代理 TMDB 图片请求。
-    
-    前端通过此接口间接加载 TMDB 图片，避免直接暴露第三方 CDN 地址。
-    请求失败时返回一个 1x1 像素的透明 PNG 占位图（而非报错），
-    避免前端 Image 组件显示红叉。
-    """
     if not image_path:
         return Response('No image path', status=404, content_type='text/plain')
 
-    tmdb_url = f'{Config.TMDB_IMAGE_BASE}{image_path}'
+    final_path = '/' + image_path.lstrip('/')
+    final_path = _ensure_size(final_path)
+    tmdb_url = f'{Config.TMDB_IMAGE_BASE}{final_path}'
 
     try:
         resp = requests.get(

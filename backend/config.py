@@ -16,8 +16,10 @@ class Config:
         'TMDB_API_KEY',
         'edb8215195923ea4410a96771ef5899d'
     )
-    # TMDB 图片 CDN 地址（w500 为中等尺寸）
-    TMDB_IMAGE_BASE: str = 'https://image.tmdb.org/t/p/w500'
+    # TMDB 图片 CDN 根地址（不含尺寸，尺寸由 TMDB_DEFAULT_SIZE 或路径指定）
+    TMDB_IMAGE_BASE: str = 'https://image.tmdb.org/t/p'
+    # 默认图片尺寸（当前端/代理未指定尺寸时使用）
+    TMDB_DEFAULT_SIZE: str = 'w500'
     # TMDB API 请求语言（中文）
     LANG_ZH: str = 'zh-CN'
 

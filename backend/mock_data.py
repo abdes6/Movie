@@ -11,7 +11,7 @@ MOVIES_POPULAR = {
         {
             "id": 1, "title": "流浪地球3", "original_title": "The Wandering Earth 3",
             "overview": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新的家园。",
-            "poster_path": "/twdgFrp9Sd8rb3TdbWFQXAvslrH.jpg",
+            "poster_path": "/7pNAki9AIaJGhNFOs8ePTFI0lDc.jpg",
             "backdrop_path": "/i3GJte6Bf5sbEEVTpQQytAg8ZBE.jpg",
             "release_date": "2026-01-22", "vote_average": 8.5,
             "genre_ids": [878, 28, 12]
@@ -19,7 +19,7 @@ MOVIES_POPULAR = {
         {
             "id": 2, "title": "哪吒之魔童闹海", "original_title": "Ne Zha 2",
             "overview": "天劫之后，哪吒和敖丙的灵魂得以保存，但肉身即将魂飞魄散。太乙真人打算用七色宝莲给二人重塑肉身。",
-            "poster_path": "/zyopv7D5j7cfswG0NYiA14qAdPC.jpg",
+            "poster_path": "/bTMf8M7rZ21fChGdtsZtJj4Dfqh.jpg",
             "backdrop_path": "/3zKU2EznBtOPtheyCTQwdZL4b93.jpg",
             "release_date": "2025-01-29", "vote_average": 8.3,
             "genre_ids": [16, 14, 12]
@@ -67,7 +67,7 @@ MOVIES_POPULAR = {
         {
             "id": 8, "title": "这个杀手不太冷", "original_title": "Léon: The Professional",
             "overview": "一名职业杀手收留了一个全家被杀害的小女孩，两人之间产生了奇妙的感情。",
-            "poster_path": "/zhG3vKWyDRaZYoaww1UVAi29T9h.jpg",
+            "poster_path": "/wT9bYGpoFnJGiRaRF9DErVjZ7qo.jpg",
             "backdrop_path": "/qqHQsStV6exghCM7zbObuYBiYxw.jpg",
             "release_date": "1994-09-14", "vote_average": 8.5,
             "genre_ids": [28, 18, 53]
@@ -253,7 +253,7 @@ MOVIES_TOP_RATED = {
         {
             "id": 8, "title": "这个杀手不太冷", "original_title": "Léon: The Professional",
             "overview": "一名职业杀手收留了一个全家被杀害的小女孩。",
-            "poster_path": "/zhG3vKWyDRaZYoaww1UVAi29T9h.jpg",
+            "poster_path": "/wT9bYGpoFnJGiRaRF9DErVjZ7qo.jpg",
             "backdrop_path": "/qqHQsStV6exghCM7zbObuYBiYxw.jpg",
             "release_date": "1994-09-14", "vote_average": 8.5,
             "genre_ids": [28, 18, 53]
@@ -285,7 +285,7 @@ MOVIES_TOP_RATED = {
         {
             "id": 2, "title": "哪吒之魔童闹海", "original_title": "Ne Zha 2",
             "overview": "天劫之后哪吒和敖丙灵魂得以保存，太乙真人用七色宝莲重塑肉身。",
-            "poster_path": "/zyopv7D5j7cfswG0NYiA14qAdPC.jpg",
+            "poster_path": "/bTMf8M7rZ21fChGdtsZtJj4Dfqh.jpg",
             "backdrop_path": "/3zKU2EznBtOPtheyCTQwdZL4b93.jpg",
             "release_date": "2025-01-29", "vote_average": 8.3,
             "genre_ids": [16, 14, 12]
@@ -342,7 +342,7 @@ MOVIES_NOW_PLAYING = {
         {
             "id": 1, "title": "流浪地球3", "original_title": "The Wandering Earth 3",
             "overview": "太阳即将毁灭，人类在地球表面建造出巨大的推进器。",
-            "poster_path": "/twdgFrp9Sd8rb3TdbWFQXAvslrH.jpg",
+            "poster_path": "w1280/7pNAki9AIaJGhNFOs8ePTFI0lDc.jpg",
             "backdrop_path": "/i3GJte6Bf5sbEEVTpQQytAg8ZBE.jpg",
             "release_date": "2026-01-22", "vote_average": 8.5,
             "genre_ids": [878, 28, 12]
@@ -367,7 +367,7 @@ MOVIES_NOW_PLAYING = {
         {
             "id": 2, "title": "哪吒之魔童闹海", "original_title": "Ne Zha 2",
             "overview": "天劫之后哪吒和敖丙灵魂得以保存。",
-            "poster_path": "/zyopv7D5j7cfswG0NYiA14qAdPC.jpg",
+            "poster_path": "/bTMf8M7rZ21fChGdtsZtJj4Dfqh.jpg",
             "backdrop_path": "/3zKU2EznBtOPtheyCTQwdZL4b93.jpg",
             "release_date": "2025-01-29", "vote_average": 8.3,
             "genre_ids": [16, 14, 12]
@@ -383,7 +383,7 @@ MOVIE_DETAILS: dict = {
     1: {
         "id": 1, "title": "流浪地球3", "original_title": "The Wandering Earth 3",
         "overview": "太阳即将毁灭，人类在地球表面建造出巨大的推进器，寻找新的家园。面对前所未有的危机，各国宇航员挺身而出，携手展开一场关乎人类命运的太空救援行动。",
-        "poster_path": "/w1280/7pNAki9AIaJGhNFOs8ePTFI0lDc.jpg",
+        "poster_path": "/7pNAki9AIaJGhNFOs8ePTFI0lDc.jpg",
         "backdrop_path": "/i3GJte6Bf5sbEEVTpQQytAg8ZBE.jpg",
         "release_date": "2026-01-22", "vote_average": 8.5,
         "genre_ids": [878, 28, 12],
@@ -408,8 +408,8 @@ MOVIE_DETAILS: dict = {
     2: {
         "id": 2, "title": "哪吒之魔童闹海", "original_title": "Ne Zha 2",
         "overview": "天劫之后，哪吒和敖丙的灵魂得以保存，但肉身即将魂飞魄散。太乙真人打算用七色宝莲给二人重塑肉身。然而在重塑肉身的过程中遇到重重困难，哪吒和敖丙的命运将走向何方？",
-        "poster_path": "/w1280/bTMf8M7rZ21fChGdtsZtJj4Dfqh.jpg",
-        "backdrop_path": "/w1280/bTMf8M7rZ21fChGdtsZtJj4Dfqh.jpg",
+        "poster_path": "/bTMf8M7rZ21fChGdtsZtJj4Dfqh.jpg",
+        "backdrop_path": "/bTMf8M7rZ21fChGdtsZtJj4Dfqh.jpg",
         "release_date": "2025-01-29", "vote_average": 8.3,
         "genre_ids": [16, 14, 12],
         "runtime": 144,
@@ -493,8 +493,8 @@ MOVIE_DETAILS: dict = {
         ],
         "recommendations": [
             {"id": 1, "title": "流浪地球3", "original_title": "The Wandering Earth 3",
-             "overview": "人类寻找新家园。", "poster_path": "/twdgFrp9Sd8rb3TdbWFQXAvslrH.jpg",
-             "backdrop_path": "/i3GJte6Bf5sbEEVTpQQytAg8ZBE.jpg", "release_date": "2026-01-22",
+             "overview": "人类寻找新家园。", "poster_path": "/7pNAki9AIaJGhNFOs8ePTFI0lDc.jpg",
+             "backdrop_path": "/7pNAki9AIaJGhNFOs8ePTFI0lDc.jpg", "release_date": "2026-01-22",
              "vote_average": 8.5, "genre_ids": [878, 28, 12]},
             {"id": 7, "title": "盗梦空间", "original_title": "Inception",
              "overview": "潜入梦境盗取秘密。", "poster_path": "/xlaY2zyzMfkhk0HSC5VUwzoZPU1.jpg",
@@ -522,7 +522,7 @@ MOVIE_DETAILS: dict = {
              "backdrop_path": "/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg", "release_date": "2010-07-15",
              "vote_average": 8.8, "genre_ids": [28, 878, 12]},
             {"id": 8, "title": "这个杀手不太冷", "original_title": "Léon: The Professional",
-             "overview": "职业杀手与小女孩的温情故事。", "poster_path": "/zhG3vKWyDRaZYoaww1UVAi29T9h.jpg",
+             "overview": "职业杀手与小女孩的温情故事。", "poster_path": "/wT9bYGpoFnJGiRaRF9DErVjZ7qo.jpg",
              "backdrop_path": "/qqHQsStV6exghCM7zbObuYBiYxw.jpg", "release_date": "1994-09-14",
              "vote_average": 8.5, "genre_ids": [28, 18, 53]}
         ]
@@ -555,7 +555,7 @@ MOVIE_DETAILS: dict = {
     8: {
         "id": 8, "title": "这个杀手不太冷", "original_title": "Léon: The Professional",
         "overview": "纽约贫民区住着一个沉默寡言的职业杀手莱昂，他独来独往，技艺精湛。邻居家小女孩玛蒂尔达因全家被缉毒警察杀害而闯入了他的生活。两个孤独的灵魂在相处中建立了奇妙的感情，莱昂冰冷的心逐渐被融化。",
-        "poster_path": "/zhG3vKWyDRaZYoaww1UVAi29T9h.jpg",
+        "poster_path": "/wT9bYGpoFnJGiRaRF9DErVjZ7qo.jpg",
         "backdrop_path": "/qqHQsStV6exghCM7zbObuYBiYxw.jpg",
         "release_date": "1994-09-14", "vote_average": 8.5,
         "genre_ids": [28, 18, 53],
@@ -686,7 +686,7 @@ MOVIE_DETAILS: dict = {
         ],
         "recommendations": [
             {"id": 8, "title": "这个杀手不太冷", "original_title": "Léon: The Professional",
-             "overview": "职业杀手与小女孩的温情故事。", "poster_path": "/zhG3vKWyDRaZYoaww1UVAi29T9h.jpg",
+             "overview": "职业杀手与小女孩的温情故事。", "poster_path": "/wT9bYGpoFnJGiRaRF9DErVjZ7qo.jpg",
              "backdrop_path": "/qqHQsStV6exghCM7zbObuYBiYxw.jpg", "release_date": "1994-09-14",
              "vote_average": 8.5, "genre_ids": [28, 18, 53]},
             {"id": 7, "title": "盗梦空间", "original_title": "Inception",
@@ -761,7 +761,7 @@ MOVIE_DETAILS: dict = {
              "backdrop_path": "/k1ziDzX0u8HgrAYshMb082nvtrF.jpg", "release_date": "2010-12-16",
              "vote_average": 8.8, "genre_ids": [28, 35, 80]},
             {"id": 8, "title": "这个杀手不太冷", "original_title": "Léon: The Professional",
-             "overview": "职业杀手与小女孩的温情故事。", "poster_path": "/zhG3vKWyDRaZYoaww1UVAi29T9h.jpg",
+             "overview": "职业杀手与小女孩的温情故事。", "poster_path": "/wT9bYGpoFnJGiRaRF9DErVjZ7qo.jpg",
              "backdrop_path": "/qqHQsStV6exghCM7zbObuYBiYxw.jpg", "release_date": "1994-09-14",
              "vote_average": 8.5, "genre_ids": [28, 18, 53]}
         ]
