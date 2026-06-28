@@ -1,7 +1,9 @@
+// 主页面：底部 Tab 导航容器
 import { HomeContent } from '../view/HomeContent';
 import { DiscoverContent } from '../view/DiscoverContent';
 import { MineContent } from '../view/MineContent';
 
+// TabBar 自定义构建参数
 interface TabBuilderParam {
   icon: string;
   text: string;
@@ -11,9 +13,11 @@ interface TabBuilderParam {
 @Entry
 @Component
 struct Index {
+  // 当前选中的 Tab 索引
   @State currentIndex: number = 0;
 
   build() {
+    // 底部 Tab 导航，支持横向滑动切换
     Tabs({ index: this.currentIndex }) {
       TabContent() {
         HomeContent()
@@ -39,6 +43,7 @@ struct Index {
     .height('100%')
   }
 
+  // 自定义 TabBar：图标 + 文字，选中态变色
   @Builder TabBuilder(param: TabBuilderParam) {
     Column() {
       Text(param.icon)

@@ -9,6 +9,13 @@ logger = logging.getLogger(__name__)
 
 
 def proxy_image(image_path: str) -> Response:
+    """
+    代理 TMDB 图片请求。
+    
+    前端通过此接口间接加载 TMDB 图片，避免直接暴露第三方 CDN 地址。
+    请求失败时返回一个 1x1 像素的透明 PNG 占位图（而非报错），
+    避免前端 Image 组件显示红叉。
+    """
     if not image_path:
         return Response('No image path', status=404, content_type='text/plain')
 
@@ -28,15 +35,17 @@ def proxy_image(image_path: str) -> Response:
             status=200
         )
     except requests.RequestException as e:
-        logger.warning('Image proxy failed: %s', e)
+        logger.warning('Image proxy failed: %s, returning placeholder', e)
+        # 返回可见占位 SVG（灰色背景 + 🎬 图标 + 提示文字），而非不可见的 1x1 图
         placeholder = (
-            b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01'
-            b'\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90wS\xde\x00'
-            b'\x00\x00\x0cIDATx\x9cc\xf8\x0f\x00\x00\x01\x01\x00'
-            b'\x05\x18\xd8N\x00\x00\x00\x00IEND\xaeB`\x82'
+            '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450">'
+            '<rect width="300" height="450" fill="#f0f0f0"/>'
+            '<text x="150" y="225" font-size="60" text-anchor="middle" fill="#ccc">🎬</text>'
+            '<text x="150" y="260" font-size="14" text-anchor="middle" fill="#bbb">图片加载失败</text>'
+            '</svg>'
         )
         return Response(
             placeholder,
-            content_type='image/png',
+            content_type='image/svg+xml',
             status=200
         )

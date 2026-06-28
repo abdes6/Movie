@@ -1,3 +1,4 @@
+// "我的"页面组件：想看/看过/喜欢三个分类 Tab + 网格/列表模式切换
 import { MovieViewModel } from '../viewmodel/MovieViewModel';
 import { MovieRepository } from '../data/MovieRepository';
 import { Movie } from '../model/Models';
@@ -19,6 +20,7 @@ export struct MineContent {
   private vm: MovieViewModel = MovieViewModel.getInstance();
   private repo: MovieRepository = new MovieRepository();
 
+  // 获取当前 Tab 对应的收藏 ID 列表
   getCurrentList(): number[] {
     const state = this.vm.getCollection();
     if (this.currentTab === 0) return state.wantToWatch;
@@ -26,6 +28,7 @@ export struct MineContent {
     return state.liked;
   }
 
+  // 获取当前 Tab 标题
   getTabTitle(): string {
     if (this.currentTab === 0) return '想看';
     if (this.currentTab === 1) return '看过';
@@ -38,6 +41,7 @@ export struct MineContent {
 
   build() {
     Column() {
+      // --- 顶部标题栏 + 视图切换 ---
       Row() {
         Text('我的')
           .fontSize(24)
@@ -53,6 +57,7 @@ export struct MineContent {
       .width('100%')
       .padding(16)
 
+      // --- 三个收藏分类 Tab ---
       Tabs({ index: this.currentTab }) {
         TabContent() {
           this.TabContentBuilder({ movies: this.wantMovies, tab: '想看' })
@@ -78,6 +83,7 @@ export struct MineContent {
     .backgroundColor('#fff')
   }
 
+  // 收藏内容的展示模板：支持网格和列表两种模式
   @Builder TabContentBuilder(param: TabContentParam) {
     if (param.movies.length === 0) {
       Text(`还没有${param.tab}的电影`)
@@ -88,6 +94,7 @@ export struct MineContent {
         .textAlign(TextAlign.Center)
     } else {
       if (this.viewMode === 'grid') {
+        // 网格模式：2 列海报展示
         Grid() {
           ForEach(param.movies, (movie: Movie): void => {
             GridItem() {
@@ -112,6 +119,7 @@ export struct MineContent {
         .width('100%')
         .padding(16)
       } else {
+        // 列表模式：小海报 + 标题行
         List() {
           ForEach(param.movies, (movie: Movie): void => {
             ListItem() {

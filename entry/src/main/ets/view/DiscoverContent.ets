@@ -1,3 +1,4 @@
+// 发现页组件：按类型 + 评分的组合筛选
 import { Movie } from '../model/Models';
 import { MovieRepository } from '../data/MovieRepository';
 import { Constants } from '../common/Constants';
@@ -9,6 +10,7 @@ interface RatingOption {
   value: number;
 }
 
+// 评分筛选项
 const RATING_OPTIONS: RatingOption[] = [
   { label: '不限', value: 0 },
   { label: '6分+', value: 6 },
@@ -26,6 +28,7 @@ export struct DiscoverContent {
   private repo: MovieRepository = new MovieRepository();
   private vm: MovieViewModel = MovieViewModel.getInstance();
 
+  // 切换类型标签的选中状态
   toggleGenre(genreId: number): void {
     const idx: number = this.selectedGenres.indexOf(genreId);
     if (idx >= 0) {
@@ -35,11 +38,13 @@ export struct DiscoverContent {
     }
   }
 
+  // 执行搜索
   async search(): Promise<void> {
     this.hasSearched = true;
     this.resultMovies = await this.repo.fetchByFilters(this.selectedGenres, this.minRating);
   }
 
+  // 清空所有筛选条件
   clearFilters(): void {
     this.selectedGenres = [];
     this.minRating = 0;
@@ -55,6 +60,7 @@ export struct DiscoverContent {
     Column() {
       Scroll() {
         Column() {
+          // --- 类型筛选 ---
           Text('类型')
             .fontSize(16)
             .fontWeight(FontWeight.Bold)
@@ -77,6 +83,7 @@ export struct DiscoverContent {
           .width('100%')
           .padding(16)
 
+          // --- 评分筛选 ---
           Text('评分')
             .fontSize(16)
             .fontWeight(FontWeight.Bold)
@@ -98,6 +105,7 @@ export struct DiscoverContent {
           }
           .margin({ left: 16, bottom: 16 })
 
+          // --- 操作按钮 ---
           Row() {
             Button('搜索')
               .width(120)
@@ -115,6 +123,7 @@ export struct DiscoverContent {
           .justifyContent(FlexAlign.Center)
           .margin({ bottom: 16 })
 
+          // --- 结果统计 ---
           if (this.hasSearched) {
             Text(`共找到 ${this.resultMovies.length} 部电影`)
               .fontSize(14)
@@ -122,6 +131,7 @@ export struct DiscoverContent {
               .margin({ left: 16, bottom: 8 })
           }
 
+          // --- 结果网格（2列） ---
           Grid() {
             ForEach(this.resultMovies, (movie: Movie): void => {
               GridItem() {

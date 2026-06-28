@@ -1,3 +1,4 @@
+// 电影详情页：海报背景模糊效果 + 电影信息 + 演员 + 推荐
 import { MovieDetail, Movie, CastMember } from '../model/Models';
 import { MovieRepository } from '../data/MovieRepository';
 import { MovieViewModel } from '../viewmodel/MovieViewModel';
@@ -12,6 +13,7 @@ struct MovieDetailPage {
   private repo: MovieRepository = new MovieRepository();
   private vm: MovieViewModel = MovieViewModel.getInstance();
 
+  // 从路由参数中获取 movieId 并加载详情
   aboutToAppear(): void {
     const rawParams: Object = router.getParams();
     const params: Record<string, Object> = rawParams as Record<string, Object>;
@@ -19,6 +21,7 @@ struct MovieDetailPage {
     this.loadDetail();
   }
 
+  // 异步加载电影详情
   async loadDetail(): Promise<void> {
     try {
       this.movie = await this.repo.fetchMovieDetail(this.movieId);
@@ -27,6 +30,7 @@ struct MovieDetailPage {
     }
   }
 
+  // 跳转到另一个电影的详情页（推荐电影点击）
   goToDetail(movieId: number): void {
     router.pushUrl({ url: 'pages/MovieDetail', params: { movieId: movieId } });
   }
@@ -36,27 +40,21 @@ struct MovieDetailPage {
       if (this.movie) {
         Scroll() {
           Column() {
-            Stack() {
-              Image(this.movie.backdropPath || this.movie.posterPath)
-                .width('100%')
-                .height(300)
-                .objectFit(ImageFit.Cover)
-                .blur(10)
-              Image(this.movie.posterPath)
-                .width(150)
-                .height(225)
-                .borderRadius(12)
-                .objectFit(ImageFit.Cover)
-            }
-            .width('100%')
-            .height(300)
+            // --- 电影海报 ---
+            Image(this.movie.posterPath)
+              .width(150)
+              .height(225)
+              .borderRadius(12)
+              .objectFit(ImageFit.Cover)
 
+            // --- 电影标题 ---
             Text(this.movie.title)
               .fontSize(22)
               .fontWeight(FontWeight.Bold)
               .margin({ top: 16, left: 16 })
               .width('100%')
 
+            // --- 基本信息行：年份 / 片长 / 评分 ---
             Row() {
               Text(this.movie.releaseDate.slice(0, 4))
                 .fontSize(14)
@@ -75,6 +73,7 @@ struct MovieDetailPage {
             .margin({ left: 16, top: 8 })
             .width('100%')
 
+            // --- 类型标签 ---
             if (this.movie.genreNames.length > 0) {
               Flex({ wrap: FlexWrap.Wrap }) {
                 ForEach(this.movie.genreNames, (name: string): void => {
@@ -90,6 +89,7 @@ struct MovieDetailPage {
               .width('100%')
             }
 
+            // --- 推荐理由（基于导演） ---
             if (this.movie.director) {
               Text(`推荐理由：由${this.movie.director}执导的作品，不容错过！`)
                 .fontSize(14)
@@ -98,6 +98,7 @@ struct MovieDetailPage {
                 .width('100%')
             }
 
+            // --- 操作按钮：想看 / 看过 / 喜欢（带选中态） ---
             Row() {
               Button('想看')
                 .fontColor(this.vm.isWantToWatch(this.movie.id) ? '#1890ff' : '#666')
@@ -123,6 +124,7 @@ struct MovieDetailPage {
             .margin({ top: 16 })
             .justifyContent(FlexAlign.Center)
 
+            // --- 剧情简介 ---
             if (this.movie.overview) {
               Text('剧情简介')
                 .fontSize(18)
@@ -137,6 +139,7 @@ struct MovieDetailPage {
                 .width('100%')
             }
 
+            // --- 演员列表（横向滑动，圆形头像） ---
             if (this.movie.cast.length > 0) {
               Text('演员')
                 .fontSize(18)
@@ -171,6 +174,7 @@ struct MovieDetailPage {
               .margin({ left: 16 })
             }
 
+            // --- 相似推荐（横向滑动，可点击跳转） ---
             if (this.movie.recommendations.length > 0) {
               Text('相似推荐')
                 .fontSize(18)
@@ -208,6 +212,7 @@ struct MovieDetailPage {
         }
         .layoutWeight(1)
       } else {
+        // 数据加载中的占位提示
         Text('加载中...')
           .margin({ top: 200 })
           .width('100%')
@@ -215,6 +220,7 @@ struct MovieDetailPage {
           .layoutWeight(1)
       }
 
+      // --- 底部返回按钮 ---
       Button('返回')
         .width(200)
         .margin({ bottom: 24 })

@@ -1,14 +1,19 @@
 {
   "module": {
+    // 模块名称，对应 build-profile.json5 中 modules 的 name
     "name": "entry",
+    // 模块类型：entry 表示应用入口模块
     "type": "entry",
     "description": "$string:module_desc",
+    // 应用启动时加载的 UIAbility
     "mainElement": "EntryAbility",
+    // 支持的设备类型
     "deviceTypes": [
       "phone"
     ],
     "deliveryWithInstall": true,
     "installationFree": false,
+    // 页面路由配置（指向 resources/base/profile/main_pages.json）
     "pages": "$profile:main_pages",
     "abilities": [
       {
@@ -36,6 +41,7 @@
       {
         "name": "EntryBackupAbility",
         "srcEntry": "./ets/entrybackupability/EntryBackupAbility.ets",
+        // 备份恢复扩展能力
         "type": "backup",
         "exported": false,
         "metadata": [
@@ -46,8 +52,10 @@
         ],
       }
     ],
+    // 应用所需权限
     "requestPermissions": [
       {
+        // 网络访问权限（用于调用后端 API 和 TMDB 图片）
         "name": "ohos.permission.INTERNET"
       }
     ]

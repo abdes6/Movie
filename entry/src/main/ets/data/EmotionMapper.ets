@@ -1,7 +1,9 @@
+// 情绪推荐映射器：10 种用户情绪 → TMDB 类型标签 + 评分阈值 + 文案
 import { EmotionItem } from '../model/Models';
 import { Constants } from '../common/Constants';
 
 export class EmotionMapper {
+  // 情绪定义列表，按顺序展示在首页
   static readonly EMOTIONS: EmotionItem[] = [
     {
       emoji: '😊', label: '开心', genreIds: [Constants.GENRES['喜剧']],
@@ -40,11 +42,13 @@ export class EmotionMapper {
       minRating: 6.0, recText: '不用动脑子，静静享受就好。'
     },
     {
+      // 随便看看：不指定类型，随机返回高分电影
       emoji: '🎬', label: '随便看看', genreIds: [],
       minRating: 0, recText: '随机推荐，给你一点小惊喜！'
     }
   ];
 
+  // 根据情绪名称查找对应的 EmotionItem
   static getEmotionByLabel(label: string): EmotionItem | undefined {
     return EmotionMapper.EMOTIONS.find((e: EmotionItem): boolean => e.label === label);
   }
